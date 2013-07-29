@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -44,6 +45,7 @@ public class CustomTextArea extends JTextPane {
 	DefaultStyledDocument doc;
 	String prev;
 	UndoManager undo;
+	Vector<String> positions;
 	public boolean firstSave=true;
 	public String title = "Untitled";
 	public String filepath = null;
@@ -52,6 +54,7 @@ public class CustomTextArea extends JTextPane {
 	public CustomTextArea() {
 
 		firstSave = false;
+		positions = new Vector<>();		
 		undo = new UndoManager();
 		
 		setKeywords();
@@ -231,6 +234,10 @@ public class CustomTextArea extends JTextPane {
 	private void doSearch(){
 		SearcherWindow search = new SearcherWindow(this);
 		search.requestFocus();
+		
+		for(String pos : positions)
+			System.out.println("found at  "+pos);
+		
 	}
 		
 	private int findLastNonWordChar (String text, int index) {

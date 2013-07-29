@@ -39,6 +39,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
@@ -67,6 +68,7 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 	JButton newTab;
 	JButton closeTab;
 	JMenuBar statusBar;
+	JTextField searcher;
 	JFileChooser fileChooser;
 	private JMenuItem[] optItems;
 	private JMenuItem[] editItems;
@@ -93,14 +95,20 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 		
 		JMenuBar menuBar = new JMenuBar();
 		statusBar = new JMenuBar();
-		statusBar.setLayout(new GridLayout(1, 3, 2, 2));
+		statusBar.setLayout(new GridLayout(1, 4, 2, 2));
 		wCount = new JMenuItem("Line:");
 		fStatus = new JMenuItem("Writable");
 		fType = new JMenuItem("");
+		searcher = new JTextField("search..");
+		
+		statusBar.add(searcher);
 		statusBar.add(wCount);
 		statusBar.add(fStatus);
 		statusBar.add(fType);
+		
 		tabs = new Vector<CustomTextArea>();
+		
+		searcher = new JTextField("Search");
 				
 		menuItems = new JMenu[]{new JMenu("File"),new JMenu("Options"),
 									new JMenu("Edit"), new JMenu("Tools")};
@@ -124,8 +132,7 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 		optItems = new JMenuItem[]{
 				new JMenuItem("Font"),
 				new JMenuItem("Settings"),
-				new JMenuItem("Preferences"),
-				new JMenuItem("Compile")};
+				new JMenuItem("Preferences")};
 		
 		editItems = new JMenuItem[]{
 										new JMenuItem("Cut"),
@@ -155,19 +162,25 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 			}
 		};
 
-		Font butFont = new Font("butfont", Font.BOLD, 22);
+		Font butFont = new Font("butfont", Font.BOLD, 18);
 		
 		menuBar.add(Box.createGlue());
+		
 		newTab = new JButton("+");
 		newTab.setForeground(Color.BLUE);
 		newTab.setFont(butFont);
 		newTab.setFocusPainted(false);
+		
 		closeTab = new JButton("X");
 		closeTab.setForeground(Color.RED);
 		closeTab.setFocusPainted(false);
 		closeTab.setFont(butFont);
+		
 		newTab.addActionListener(addTav);
 		closeTab.addActionListener(remTav);
+		
+		//menuBar.add(searchBar);
+		//menuBar.add(search);
 		menuBar.add(newTab);
 		menuBar.add(closeTab);
 		
@@ -192,12 +205,7 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 		setLocationRelativeTo(null);
 	}
 	
-//	private void updateLineNum(){
-//		
-//		int line = tabs.elementAt(frame.getSelectedIndex()).getCaretPosition();
-//		System.out.println("line:  "+line);
-//	}
-	
+
 	/*
 	 * initiates each indivisial tab to its properties
 	 * adds listeners
