@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.datatransfer.DataFlavor;
@@ -102,16 +104,7 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 		statusBar.add(fStatus);
 		statusBar.add(fType);
 		tabs = new Vector<CustomTextArea>();
-		
-		Image image = ImageIO.read(new File("C:\\file\\xtab.jpg"));
-		Image close = image.getScaledInstance(30, 20, Image.SCALE_SMOOTH);
-		image = ImageIO.read(new File("C:\\file\\addtab.jpg"));
-		Image addTab = image.getScaledInstance(30, 20, Image.SCALE_SMOOTH);
-		ImageIcon iconClose = new ImageIcon(close);
-		iconClose.setDescription("Close Tab");
-		ImageIcon iconAdd = new ImageIcon(addTab);
-		iconAdd.setDescription("Add New Tab");
-		
+				
 		menuItems = new JMenu[]{new JMenu("File"),new JMenu("Options"),
 									new JMenu("Edit"), new JMenu("Tools")};
 		
@@ -165,13 +158,21 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 			}
 		};
 
+		Font butFont = new Font("butfont", Font.BOLD, 22);
+		
 		menuBar.add(Box.createGlue());
-		newTab = new JButton(iconAdd);
-		closeTab = new JButton(iconClose);
+		newTab = new JButton("+");
+		newTab.setForeground(Color.BLUE);
+		newTab.setFont(butFont);
+		newTab.setFocusPainted(false);
+		closeTab = new JButton("X");
+		closeTab.setForeground(Color.RED);
+		closeTab.setFocusPainted(false);
+		closeTab.setFont(butFont);
 		newTab.addActionListener(addTav);
 		closeTab.addActionListener(remTav);
-		menuBar.add(closeTab);
 		menuBar.add(newTab);
+		menuBar.add(closeTab);
 		
 		addMenuItems();
 		
@@ -499,6 +500,7 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 				break;
 		case "java":showText="java File";
 				break;
+		case "cpp":showText="C++ file";
 		default:showText="unKnown";		
 		}
 		
@@ -679,7 +681,7 @@ public class TextFrame extends JFrame implements ActionListener,CaretListener, D
 		try {
 			int line=textArea.getLineOffset(textArea, car.getMark());
 			int col=car.getDot()-textArea.getLineStartOffset(textArea, line);
-			wCount.setText("Line: "+line+"Col: "+col);
+			wCount.setText("Line: "+line+",Col: "+col);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
